@@ -76,9 +76,9 @@ int main(void)
     TA0CTL = TASSEL_1 + MC_2 + TACLR; // sets parameters for timer a0
 
 
-    TA0CCR1 = timerConvert(1, 10); 
+    TA0CCR1 = timerConvert(1, 8); 
     TA0CCTL1 = CCIE; // enables interrupt for ta0 LED1
-    TA0CCR2 = timerConvert(5, 10); 
+    TA0CCR2 = timerConvert(5, 8); 
     TA0CCTL2 = CCIE; // enables interrupt for ta0 LED2
 
     _BIS_SR(LPM3_bits + GIE); //enters low power mode
@@ -89,11 +89,11 @@ __interrupt void TIMER0_A1(void)
 {
     switch (__even_in_range(TA0IV, 10)) {
     case 2:
-        TA0CCR1 += timerConvert(1, 10);
+        TA0CCR1 += timerConvert(1, 8);
         P1OUT ^= BIT0; //toggles pin1 
         break;
     case 4:
-        TA0CCR2 += timerConvert(5, 10);
+        TA0CCR2 += timerConvert(5, 8);
         P4OUT ^= BIT7; //toggles pin4
     case 10:
         break;
